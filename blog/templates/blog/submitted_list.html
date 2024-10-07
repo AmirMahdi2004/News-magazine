@@ -1,0 +1,39 @@
+{% extends 'parent/base.html' %}
+{% block title %}Category{% endblock title %}
+{% block content %}
+    <div class="latest-posts">
+        <div class="container-fluid">
+            <div class="blog-title-span">
+                <span class="title">تصاویر</span>
+            </div>
+            {% for sub in submitted %}
+                <div class="col-md-3">
+                    <div class="post-box">
+                        <a href="{{ sub.get_absolute_url }}">
+                            <figure>
+                                <img src="{{ sub.image.url }}" alt="">
+                                <figcaption class="meta-fig">
+                                    <span><i class="fa fa-comment-o"></i> {{ sub.comments.count }}</span>
+                                    <span><i class="fa fa-clock-o"></i>{{ sub.created }}</span>&nbsp;
+
+                                </figcaption>
+                                <figcaption class="view">
+                                    <span>{{ sub.category }}</span>
+
+                                </figcaption>
+                            </figure>
+                            <div class="text-p">
+                                <h5>{{ sub.title }}</h5>
+                                <p>{{ sub.content }}</p>
+                                <div class="text-rigt">
+                                    <a href="{{ sub.get_absolute_url }}">ادامه ...</a></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+            <div>{% include 'partials/pagination.html' with page=submitted %}</div>
+        </div>
+    </div>
+
+{% endblock content %}

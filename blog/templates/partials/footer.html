@@ -1,0 +1,63 @@
+<div class="clear-fix"></div>
+<div class="footer">
+    <div class="container-fluid">
+        <div class="col-md-5">
+            <div class="footer-box">
+                <span class="title">مجله روز</span>
+                <p>
+                    این سایت جهت نمونه کار توسط امیر مهدی دهقانی با فرم ورک جنگو و برای رزمه ساخته شده و هیچ گونه
+                    کاربرده دیگری ندارد . با
+                    تشکر از بازدید کنندگان گرامی .
+                </p>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="footer-box">
+                <span class="title">دسترسی سریع</span>
+                <ul>
+                    <li><a href="{% url 'blog:report_list' %}">گزارش</a></li>
+                    <li><a href="{% url 'blog:article' %}">اخبار مقالات</a></li>
+                    <li><a href="{% url 'blog:note_list' %}">یاداشت</a></li>
+                    <li><a href="{% url 'blog:photo_list' %}">عکس</a></li>
+                    {#                    <li><a href="{% url 'blog:video_list' %}">ویدیو</a></li>#}
+
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="footer-box">
+                <span class="title">دسته بندی</span>
+                <ul>
+                    {% for category in categories %}
+                        <li><a href="{{ category.get_absolute_url }}">{{ category }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="footer-box contact-box">
+                <span class="title">تماس با ما</span>
+                <p><i class="fa fa-phone"></i> 09198392998</p>
+                <p><i class="fa fa-phone"></i> 09389660893</p>
+                <p><i class="fa fa-envelope-o"></i> amirmahid.dehghani313@gmail.com</p>
+                <p><i class="fa fa-map-marker"></i> تهران </p>
+            </div>
+        </div>
+        <div class="clear-fix"></div>
+    </div>
+</div>
+<div class="end-wrapper">
+    <div class="container-fluid">
+        <div class="col-md-6">
+            <div class="copy-r">
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="creator text-left">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bg"></div>

@@ -1,0 +1,126 @@
+{% extends 'parent/base.html' %}
+{% block title %}Category{% endblock title %}
+{% block head %}
+    <style>
+        .body-comments {
+            font-family: 'Vazir', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .comments-section {
+            max-width: 600px;
+            margin: auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .comment-card {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 15px 0;
+        }
+
+        .comment-card:last-child {
+            border-bottom: none;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .username {
+            color: #007bff;
+        }
+
+        .date {
+            color: #999;
+        }
+
+        .comment-text {
+            margin: 10px 0 0;
+        }
+    </style>
+{% endblock head %}
+{% block content %}
+    <div class="single_post">
+        <div class="container-fluid">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="post_img">
+                            <img src="https://sitesazz.ir/wp-content/uploads/%D8%AE%D8%A8%D8%B1%D9%86%D8%A7%D9%85%D9%87-%D8%A7%D9%84%DA%A9%D8%AA%D8%B1%D9%88%D9%86%DB%8C%DA%A9%DB%8C3.png"
+                                 alt="">
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="posts_meta text-center">
+                    <span><i class="fa fa-comment-o"></i> {{ video.comments.count }} </span>
+                    <span><i class="fa fa-archive"></i> {{ video.category }} </span>
+                    <span><i class="fa fa-calendar"></i> {{ video.created }} </span>
+                </div>
+                <div class="post_content">
+                    <h4>| {{ video.title }}</h4>
+
+                    <img src="{{ video.image.url }}" alt="">
+                    <p>{{ video.content }}</p>
+                    <br><br><br>
+                    <video width="99%" height="500" controls>
+                        <source src="{{ video.video.url }}" type="video/mp4">
+                        مرور گر شما ویدو را پشتیبانی نمیکند
+                    </video>
+                </div>
+                <div class="body-comments">
+                    <div class="comments-section ">
+                        <h2>نظرات کاربران</h2>
+                        {% for sh in show %}
+                            <div class="comment-card">
+                                <div class="comment-header">
+                                    <span class="username">{{ sh.sender }}</span>
+                                    <span class="date">{{ sh.created }}</span>
+                                </div>
+                                <p class="comment-text">{{ sh.content }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            <br>
+                <div class="comments_form">
+                    <h5>دیدگاه شما </h5>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="نام شما" name="sender">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" class="form-control" placeholder="ایمیل" name="email">
+                            </div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" placeholder="نظر شما ..." name="content"></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="text-left">
+                                    <button class="btn btn-primary">ثبت نظر</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

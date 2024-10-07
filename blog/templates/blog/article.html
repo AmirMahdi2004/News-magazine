@@ -1,0 +1,42 @@
+{% extends 'parent/base.html' %}
+{% block title %}Aticle{% endblock title %}
+{% block content %}
+    <div class="latest-posts">
+        <div class="container-fluid">
+            <div class="blog-title-span">
+                <span class="title">اخبار و مقالات</span>
+            </div>
+            {% for post in posts %}
+                <div class="col-md-3">
+                    <div class="post-box">
+                        <a href="{{ post.get_absolute_url }}">
+                            <figure>
+                                <img src="{{ post.image.url }}" alt="">
+                                <figcaption class="meta-fig">
+                                    <span><i class="fa fa-comment-o"></i> 12</span>
+                                    <span><i class="fa fa-clock-o"></i>{{ post.created }}</span>&nbsp;
+
+                                </figcaption>
+                                <figcaption class="view">
+                                    <span>{{ post.category }}</span>
+
+                                </figcaption>
+                            </figure>
+                            <div class="text-p">
+                                <h5>{{ post.title }}</h5>
+                                <p>{{ post.content }}</p>
+                                <div class="text-rigt">
+                                    <a href="#">ادامه ...</a></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+
+
+
+            <div>{% include 'partials/pagination.html' with page=posts%}</div>
+        </div>
+    </div>
+
+{% endblock content %}

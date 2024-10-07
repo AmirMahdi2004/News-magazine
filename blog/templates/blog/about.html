@@ -1,0 +1,14 @@
+{% extends 'parent/base.html' %}
+{% block title %}About{% endblock title %}
+{% block content %}
+    <div class="footer-box contact-box" style="text-align: center; background-color: snow; padding-bottom: 130px">
+
+        {% for resm in resume %}
+            <h1>{{ resm.title }}</h1>
+   	    <img src="{{ resm.image1 }}">
+            {% if resm.image2 %}
+            	<img src="{{ resm.image2.url }}">
+            {% endif %} 
+   {% endfor %}
+    </div>
+{% endblock content %}

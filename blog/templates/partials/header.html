@@ -1,0 +1,35 @@
+<div class="top-bar">
+    <div class="container-fluid">
+        <div class="col-md-6">
+            <div class="search-btn">
+                <form class="search_form" method="get" action="{% url 'blog:search' %}">
+                    <button class="button_search"><i class="fa fa-search"></i></button>
+                    <label>
+                        <input class="search" type="text" name="query" required placeholder="جستجو ">
+                    </label>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="top-cat-box">
+                <div class="col-md-12">
+                    <div class="menu">
+                        <ul>
+                            <li><a href="{% url 'blog:contact_us' %}">تماس با ما</a></li>
+                            <li><a href="{% url 'blog:about' %}">درباره ما</a></li>
+                            <li><a href="{% url 'blog:article' %}">مقالات</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- <div class="col-md-3">
+                   <div class="show-cat">
+                       <span>
+                           دسته ها
+                           <i class="fa fa-bars"></i>
+                       </span>
+                   </div>
+                   </div> -->
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+{% extends 'parent/base.html' %}
+{% block title %}Report Detail{% endblock title %}
+{% block content %}
+    <div class="single_post">
+        <div class="container-fluid">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="post_img">
+                            <img src="https://sitesazz.ir/wp-content/uploads/%D8%AE%D8%A8%D8%B1%D9%86%D8%A7%D9%85%D9%87-%D8%A7%D9%84%DA%A9%D8%AA%D8%B1%D9%88%D9%86%DB%8C%DA%A9%DB%8C3.png"
+                                 alt="">
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="posts_meta text-center">
+                    <span><i class="fa fa-calendar"></i> {{ report.created }}</span>
+                </div>
+                <div class="post_content">
+                    <h4>| {{ report.title }}</h4>
+                    <p>{{ report.content }}</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}

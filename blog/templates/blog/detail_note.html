@@ -1,0 +1,51 @@
+{% extends 'parent/base.html' %}
+{% block title %}Note Detail{% endblock title %}
+{% block content %}
+    <div class="single_post">
+        <div class="container-fluid">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="post_img">
+                            <img src="https://sitesazz.ir/wp-content/uploads/%D8%AE%D8%A8%D8%B1%D9%86%D8%A7%D9%85%D9%87-%D8%A7%D9%84%DA%A9%D8%AA%D8%B1%D9%88%D9%86%DB%8C%DA%A9%DB%8C3.png"
+                                 alt="">
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="posts_meta text-center">
+                    <span><i class="fa fa-comment-o"></i>{{ comments }}</span>
+                    <span><i class="fa fa-calendar"></i> {{ notes.updated }}</span>
+                </div>
+                <div class="post_content">
+                    <h4>| {{ notes.title }}</h4>
+                    <p>{{ notes.note }}</p>
+                </div>
+                <div class="comments_form">
+                    <h5>دیدگاه شما </h5>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="نام شما" name="author">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" class="form-control" placeholder="ایمیل" name="email">
+                            </div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" placeholder="نظر شما ..." name="content"></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="text-left">
+                                    <button class="btn btn-primary">ثبت نظر</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

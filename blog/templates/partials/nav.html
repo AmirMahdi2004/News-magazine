@@ -1,0 +1,23 @@
+<div class="main-header">
+    <div class="container-fluid">
+        <div class="col-md-10">
+            <div class="main-menu">
+                <ul>
+                    <li><a href="{% url 'blog:index' %}">خانه </a></li>
+                    {% for category in categories %}
+                        <li><a href="{{ category.get_absolute_url }}">{{ category }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="social-box">
+                <ul>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -22,4 +22,5 @@ urlpatterns = [
     path('submitted', views.submitted_list, name='submitted_list'),
     path('submitted/<int:pk>', views.submitted_detail, name='submitted_detail'),
 
+
 ]

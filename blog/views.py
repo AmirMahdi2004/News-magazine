@@ -227,3 +227,8 @@ def submitted_detail(request, pk):
         'submitted': submitted
     }
     return render(request, 'blog/submitted_detail.html', context)
+
+
+def not_found(request, exception):
+    return render(request, 'blog/404.html')
+

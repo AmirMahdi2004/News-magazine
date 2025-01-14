@@ -1,0 +1,26 @@
+{% extends 'parent/base.html' %}
+{% block title %}پرداخت موفق{% endblock title %}
+
+{% block content %}
+<div class="latest-posts">
+    <div class="container-fluid">
+        <div class="col-md-6 col-md-offset-3" style="padding: 50px 15px; text-align: center;">
+            <div style="background: #fff; padding: 40px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                <i class="fa fa-check-circle" style="font-size: 70px; color: #27ae60;"></i>
+                <h2 style="margin-top: 20px;">پرداخت موفق</h2>
+                <p style="margin: 20px 0; font-size: 16px;">
+                    اشتراک «{{ subscription_type }}» شما فعال شد.
+                </p>
+                {% if subscription_end %}
+                    <p>اعتبار تا: <strong>{{ subscription_end|date:"Y/m/d" }}</strong></p>
+                {% endif %}
+
+                <div style="margin-top: 30px;">
+                    <a href="{% url 'accounts:profile' %}" class="btn btn-success">مشاهده پروفایل</a>
+                    <a href="{% url 'blog:index' %}" class="btn btn-default">بازگشت به خانه</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

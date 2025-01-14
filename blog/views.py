@@ -3,8 +3,8 @@ from django.utils import timezone
 from .models import *
 from .forms import CommentForm, SearchForm, Comments
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
-
+from django.db.models import Q, Count
+from .decorators import subscription_required
 # Create your views here.
 
 def paginate(request, queryset, page):
@@ -19,7 +19,7 @@ def paginate(request, queryset, page):
 
     return posts
 
-
+@subscription_required
 def comments(request, pk, ppv, sr):
     show = ppv.comments.filter(allowed=True).order_by('-created')
     form = CommentForm(data=request.POST)
@@ -80,7 +80,7 @@ def article(request):
     }
     return render(request, 'blog/article.html', context)
 
-
+@subscription_required
 def article_detail(request, pk):
     post = Post.objects.get(pk=pk)
     comment = comments(request, pk, post, 'post')
@@ -91,22 +91,6 @@ def article_detail(request, pk):
         'show': comment[3],
     }
     return render(request, 'blog/detail.html', context)
-
-
-def search(request):
-    if 'query' in request.GET:
-        query = request
-        form = SearchForm(data=request.GET)
-        if form.is_valid():
-            query = form.cleaned_data['query']
-            results = Post.objects.all().filter(title=query)
-            results = paginate(request, results, 12)
-    context = {
-        'query': query,
-        'results': results,
-    }
-    return render(request, 'blog/search.html', context)
-
 
 def category(request, slug=None):
     category = None
@@ -146,7 +130,7 @@ def list_note(request):
     }
     return render(request, 'blog/note_list.html', context)
 
-
+@subscription_required
 def detail_note(request, pk):
     note = get_object_or_404(Note, pk=pk)
     context = {
@@ -163,7 +147,7 @@ def photo_list(request):
     }
     return render(request, 'blog/photo_list.html', context)
 
-
+@subscription_required
 def detail_photo(request, pk):
     photo = Photo.objects.get(pk=pk)
     comment = comments(request, pk, photo, 'photo')
@@ -185,7 +169,7 @@ def report_list(request):
 
     return render(request, 'blog/report_list.html', context)
 
-
+@subscription_required
 def report(request, pk):
     report = get_object_or_404(Report, pk=pk)
     return render(request, 'blog/report_detail.html', {'report': report})
@@ -199,7 +183,7 @@ def video_list(request):
     }
     return render(request, 'blog/video_list.html', context)
 
-
+@subscription_required
 def video_detail(request, pk):
     video = Video.objects.get(pk=pk)
     comment = comments(request, pk, video, 'video')
@@ -220,7 +204,7 @@ def submitted_list(request):
     }
     return render(request, 'blog/submitted_list.html', context)
 
-
+@subscription_required
 def submitted_detail(request, pk):
     submitted = get_object_or_404(Submitted, pk=pk)
     context = {
@@ -232,3 +216,31 @@ def submitted_detail(request, pk):
 def not_found(request, exception):
     return render(request, 'blog/404.html')
 
+def post_search(request):
+    query = request.GET.get('q', '').strip()
+    posts = Post.objects.select_related('category').all()
+
+    if query:
+        posts = posts.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(full_content__icontains=query) |
+            Q(category__name__icontains=query)
+        ).distinct()
+
+    posts = posts.order_by('-created')
+
+    paginator = Paginator(posts, 9)
+    page_number = request.GET.get('page')
+    results = paginator.get_page(page_number)
+
+    photos = Photo.objects.order_by('-created')[:6]
+    reports = Report.objects.order_by('-created')[:6]
+
+    context = {
+        'query': query,
+        'results': results,
+        'photos': photos,
+        'reports': reports,
+    }
+    return render(request, 'blog/search.html', context)

@@ -1,40 +1,63 @@
 {% extends 'parent/base.html' %}
 {% block title %}Search{% endblock title %}
+
 {% block content %}
-    <div class="latest-posts">
-        <div class="container-fluid">
+<div class="latest-posts">
+    <div class="container-fluid">
+        <div class="row">
+
+            {# ===== ستون اصلی ===== #}
             <div class="col-md-9">
                 <div class="blog-title-span">
-                    <span class="title">جستجو برای : " {{ query }}"</span>
+                    {% if query %}
+                        <span class="title">جستجو برای: «{{ query }}» — {{ results.paginator.count }} مورد</span>
+                    {% else %}
+                        <span class="title">همه مقالات</span>
+                    {% endif %}
                 </div>
-                {% if query %}
+
+                <div class="row">
                     {% for result in results %}
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-sm-6">
                             <div class="post-box">
                                 <a href="{{ result.get_absolute_url }}">
                                     <figure>
-                                        <img src="{{ result.image.url }}" alt="">
+                                        <img src="{{ result.image.url }}" alt="{{ result.title }}">
                                         <figcaption class="meta-fig">
-                                            <span><i class="fa fa-clock-o"></i> {{ result.created }}</span>&nbsp;
-                                            <span><i class="fa fa-comment-o"></i>{{ result.comments.count }}</span>
+                                            <span><i class="fa fa-clock-o"></i> {{ result.created|date:"Y/m/d" }}</span>&nbsp;
+                                            <span><i class="fa fa-comment-o"></i> {{ result.comments.count }}</span>
                                         </figcaption>
-                                        <figcaption class="view">
-                                            <span>{{ result.category }}</span>
-                                        </figcaption>
+                                        {% if result.category %}
+                                            <figcaption class="view">
+                                                <span>{{ result.category }}</span>
+                                            </figcaption>
+                                        {% endif %}
                                     </figure>
                                     <div class="text-p">
                                         <h5>{{ result.title }}</h5>
-                                        <p>{{ result.content }}
-                                        </p>
+                                        <p>{{ result.content|truncatewords:20 }}</p>
                                         <div class="text-rigt">
-                                            <a href="{{ result.get_absolute_url }}">ادامه ...</a></div>
+                                            <a href="{{ result.get_absolute_url }}">ادامه ...</a>
+                                        </div>
                                     </div>
                                 </a>
                             </div>
                         </div>
+                    {% empty %}
+                        <div class="col-md-12">
+                            <p>نتیجه‌ای پیدا نشد.</p>
+                        </div>
                     {% endfor %}
-                {% endif %}
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include 'partials/pagination.html' with page=results %}
+                    </div>
+                </div>
             </div>
+
+            {# ===== سایدبار ===== #}
             <div class="col-md-3 main-content">
                 <div class="top-sidebar-r">
                     <span class="title">عکس</span>
@@ -44,16 +67,15 @@
                                 <div class="col-md-6">
                                     <div class="img-box">
                                         <figure>
-                                            <img src="{{ photo.image1.url }}" alt="">
+                                            <img src="{{ photo.image1.url }}" alt="{{ photo.title }}">
                                             <figcaption><span>1</span></figcaption>
                                         </figure>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="meta">
-                                        <h5>
-                                            {{ photo.title }}</h5>
-                                        <span><i class="fa fa-clock-o"></i> {{ photo.created }}</span>
+                                        <h5>{{ photo.title }}</h5>
+                                        <span><i class="fa fa-clock-o"></i> {{ photo.created|date:"Y/m/d" }}</span>
                                         <div class="text-left">
                                             <sub><i class="fa fa-comment"></i> {{ photo.comments.count }}</sub>
                                         </div>
@@ -70,13 +92,14 @@
                         <div class="text-left"><i class="fa fa-arrows-alt"></i></div>
                         <ul>
                             {% for rep in reports %}
-                                <li><a href="{{ rep.get_absolute_url }}">{{ rep.content }}</a></li>
+                                <li><a href="{{ rep.get_absolute_url }}">{{ rep.title }}</a></li>
                             {% endfor %}
                         </ul>
                     </div>
                 </div>
             </div>
-            <div>{% include 'partials/pagination.html' with page=results%}</div>
+
         </div>
     </div>
+</div>
 {% endblock content %}

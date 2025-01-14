@@ -13,7 +13,7 @@ urlpatterns = [
     path('detail_note/<int:pk>', views.detail_note, name='detail_note'),
     path('list_phto', views.photo_list, name='photo_list'),
     path('detail_photo/<int:pk>', views.detail_photo, name='detail_photo'),
-    path('search', views.search, name='search'),
+    # path('search', views.search, name='search'),
     path('category/<str:slug>', views.category, name='category'),
     path('about', views.about, name='about'),
     path('contacat', views.contact_us, name='contact_us'),
@@ -21,6 +21,6 @@ urlpatterns = [
     path('video', views.video_list, name='video_list'),
     path('submitted', views.submitted_list, name='submitted_list'),
     path('submitted/<int:pk>', views.submitted_detail, name='submitted_detail'),
-
+    path('search/', views.post_search, name='post_search'),
 
 ]

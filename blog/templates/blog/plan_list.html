@@ -1,0 +1,43 @@
+{% extends 'parent/base.html' %}
+{% block title %}خرید اشتراک{% endblock title %}
+
+{% block content %}
+<div class="latest-posts">
+    <div class="container-fluid">
+        <div class="blog-title-span">
+            <span class="title">پلن‌های اشتراک</span>
+        </div>
+
+        {% if user_subscription_active %}
+            <div class="col-md-12" style="margin-bottom: 20px;">
+                <div class="alert alert-success">
+                    اشتراک فعلی شما فعال است — اعتبار تا {{ subscription_end|date:"Y/m/d" }}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row">
+            {% for plan in plans %}
+                <div class="col-md-6">
+                    <div class="post-box" style="padding: 30px; text-align: center;">
+                        <h3>{{ plan.get_plan_type_display }}</h3>
+                        <p style="font-size: 22px; color: #e74c3c; margin: 15px 0;">
+                            {{ plan.price }} تومان
+                        </p>
+                        <p>مدت اعتبار: {{ plan.duration_days }} روز</p>
+                        <a href="{% url 'subscriptions:buy_plan' plan.id %}"
+                           class="btn btn-primary"
+                           style="margin-top: 15px;">
+                            خرید اشتراک
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-md-12">
+                    <p>هیچ پلنی تعریف نشده است.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
